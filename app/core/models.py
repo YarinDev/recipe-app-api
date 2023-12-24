@@ -29,7 +29,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
-    # custom user manager for our user model (above) to work with django cli commands (createsuperuser) and django admin (user model)
+    # custom user manager for our user model (above) to work with django cli
+    # commands (createsuperuser) and django admin (user model)
     objects = UserManager()
 
     USERNAME_FIELD = "email"
