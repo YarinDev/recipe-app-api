@@ -4,3 +4,7 @@ exclude =
     __pycache__,
     manage.py,
     settings.py
+
+per-file-ignores =
+    # line too long
+    *.py: E501
