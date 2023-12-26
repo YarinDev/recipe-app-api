@@ -42,5 +42,5 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     # custom user manager for our user model (above) to work with django cli commands (createsuperuser) and django admin (user model)
     objects = UserManager()
-
+    # set email as username field for our custom user model
     USERNAME_FIELD = "email"

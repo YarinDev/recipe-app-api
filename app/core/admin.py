@@ -10,7 +10,7 @@ from core import models
 
 class UserAdmin(BaseUserAdmin):
     """Define the admin pages for users."""
-
+    # list_display is a special variable that overrides the default list user page in django admin
     ordering = ["id"]
     list_display = ["email", "name"]
     fieldsets = (
@@ -19,6 +19,25 @@ class UserAdmin(BaseUserAdmin):
         (_("Important dates"), {"fields": ("last_login",)}),
     )
     readonly_fields = ["last_login"]
+
+    # add_fieldsets is a special variable that overrides the default add user page in django admin
+    add_fieldsets = (
+        (
+            None,
+            {
+                "classes": ("wide",),
+                "fields": (
+                    "email",
+                    "password1",
+                    "password2",
+                    "name",
+                    "is_active",
+                    "is_staff",
+                    "is_superuser",
+                ),
+            },
+        ),
+    )
 
 
 admin.site.register(models.User, UserAdmin)
