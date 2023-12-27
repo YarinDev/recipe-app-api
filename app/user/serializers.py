@@ -1,7 +1,12 @@
 """
 Serializers for the user API View.
 """
-from django.contrib.auth import get_user_model
+from django.contrib.auth import (
+    get_user_model,
+    authenticate,
+)
+
+from django.utils.translation import gettext as _
 
 from rest_framework import serializers
 
@@ -22,3 +27,39 @@ class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         """Create a new user with encrypted password and return it"""
         return get_user_model().objects.create_user(**validated_data)
+
+
+class AuthTokenSerializer(serializers.Serializer):
+    """Serializer for the user authentication token"""
+
+    email = serializers.EmailField()
+    # trim_whitespace=False allows us to authenticate with an email that has trailing whitespace
+    password = serializers.CharField(
+        style={"input_type": "password"}, trim_whitespace=False
+    )
+
+    # validate is a function that is called when we validate the serializer
+    # attrs is the data that is passed into the serializer
+    def validate(self, attrs):
+        """Validate and authenticate the user"""
+        # attrs is a dictionary of all the fields that make up our serializer
+        email = attrs.get("email")
+        password = attrs.get("password")
+
+        # authenticate with the email and password
+        user = authenticate(
+            # context is the context of the request that was made
+            request=self.context.get("request"),
+            username=email,
+            password=password,
+        )
+
+        # if authentication fails, raise an authentication error
+        if not user:
+            msg = _("Unable to authenticate with provided credentials")
+            raise serializers.ValidationError(msg, code="authorization")
+
+        # set the user attribute on the serializer to the user that was authenticated
+        attrs["user"] = user
+        # return the validated attributes
+        return attrs
