@@ -99,7 +99,7 @@ class PrivateTagsApiTests(TestCase):
         res = self.client.delete(url)
 
         self.assertEqual(res.status_code, status.HTTP_204_NO_CONTENT)
-        #retrieve all tags for the user
+        # retrieve all tags for the user
         tags = Tag.objects.filter(user=self.user)
         # check if the tag is deleted
         self.assertFalse(tags.exists())
