@@ -10,6 +10,7 @@ from core import models
 
 class UserAdmin(BaseUserAdmin):
     """Define the admin pages for users."""
+
     # list_display is a special variable that overrides the default list user page in django admin
     ordering = ["id"]
     list_display = ["email", "name"]
