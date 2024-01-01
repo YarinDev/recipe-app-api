@@ -61,6 +61,8 @@ class Recipe(models.Model):
     link = models.CharField(max_length=255, blank=True)
     # many to many relationship with Tag model means that a recipe can have many tags and a tag can have many recipes
     tags = models.ManyToManyField("Tag")
+    # many to many relationship with Ingredient model means that a recipe can have many ingredients and an ingredient can have many recipes
+    ingredients = models.ManyToManyField("Ingredient")
 
     def __str__(self):
         """Return string representation of recipe."""
@@ -78,4 +80,18 @@ class Tag(models.Model):
 
     def __str__(self):
         """Return string representation of tag."""
+        return self.name
+
+
+class Ingredient(models.Model):
+    """Ingredient to be used in a recipe."""
+
+    name = models.CharField(max_length=255)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+
+    def __str__(self):
+        """Return string representation of ingredient."""
         return self.name
