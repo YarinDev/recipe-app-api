@@ -472,7 +472,6 @@ class ImageUploadTests(TestCase):
         self.assertIn("image", res.data)
         self.assertTrue(os.path.exists(self.recipe.image.path))
 
-
     def test_upload_image_bad_request(self):
         """Test uploading an invalid image"""
         url = image_upload_url(self.recipe.id)
