@@ -1,6 +1,9 @@
 """
 Database models.
 """
+import uuid
+import os
+
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import (
@@ -8,6 +11,16 @@ from django.contrib.auth.models import (
     BaseUserManager,
     PermissionsMixin,
 )
+
+
+def recipe_image_file_path(instance, filename):
+    """Generate file path for new recipe image."""
+    # get the file extension from the filename
+    ext = os.path.splitext(filename)[1]
+    # generate a random filename
+    filename = f"{uuid.uuid4()}{ext}"
+    # return the path
+    return os.path.join("uploads/recipe/", filename)
 
 
 class UserManager(BaseUserManager):
@@ -63,6 +76,8 @@ class Recipe(models.Model):
     tags = models.ManyToManyField("Tag")
     # many to many relationship with Ingredient model means that a recipe can have many ingredients and an ingredient can have many recipes
     ingredients = models.ManyToManyField("Ingredient")
+    # optional image upload field
+    image = models.ImageField(null=True, upload_to=recipe_image_file_path)
 
     def __str__(self):
         """Return string representation of recipe."""
