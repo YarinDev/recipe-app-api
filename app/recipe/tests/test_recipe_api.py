@@ -438,6 +438,52 @@ class PrivateRecipeApiTests(TestCase):
         # assert that the recipe has no ingredients
         self.assertEqual(recipe.ingredients.count(), 0)
 
+    def test_filter_by_tags(self):
+        """Test filtering recipes by tags"""
+        r1 = create_recipe(user=self.user, title="Thai vegetable curry")
+        r2 = create_recipe(user=self.user, title="Aubergine with tahini")
+        tag1 = Tag.objects.create(user=self.user, name="Vegan")
+        tag2 = Tag.objects.create(user=self.user, name="Vegetarian")
+        r1.tags.add(tag1)
+        r2.tags.add(tag2)
+        r3 = create_recipe(user=self.user, title="Fish and chips")
+
+        # filter recipes by tag1 and tag2
+        params = {"tags": f"{tag1.id},{tag2.id}"}
+        res = self.client.get(RECIPES_URL, params)
+
+        # check if the response contains r1 and r2
+        serializer1 = RecipeSerializer(r1)
+        serializer2 = RecipeSerializer(r2)
+        serializer3 = RecipeSerializer(r3)
+        self.assertIn(serializer1.data, res.data)
+        self.assertIn(serializer2.data, res.data)
+        # check if the response does not contain r3
+        self.assertNotIn(serializer3.data, res.data)
+
+    def test_filter_by_ingredients(self):
+        """Test filtering recipes by ingredients"""
+        r1 = create_recipe(user=self.user, title="Posh beans on toast")
+        r2 = create_recipe(user=self.user, title="Chicken cacciatore")
+        i1 = Ingredient.objects.create(user=self.user, name="Feta cheese")
+        i2 = Ingredient.objects.create(user=self.user, name="Chicken")
+        r1.ingredients.add(i1)
+        r2.ingredients.add(i2)
+        r3 = create_recipe(user=self.user, title="Steak and mushrooms")
+
+        # filter recipes by i1 and i2
+        params = {"ingredients": f"{i1.id},{i2.id}"}
+        res = self.client.get(RECIPES_URL, params)
+
+        # check if the response contains r1 and r2
+        serializer1 = RecipeSerializer(r1)
+        serializer2 = RecipeSerializer(r2)
+        serializer3 = RecipeSerializer(r3)
+        self.assertIn(serializer1.data, res.data)
+        self.assertIn(serializer2.data, res.data)
+        # check if the response does not contain r3
+        self.assertNotIn(serializer3.data, res.data)
+
 
 class ImageUploadTests(TestCase):
     """Test for image upload API"""
