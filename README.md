@@ -40,3 +40,6 @@ An auto API Documentation has been set using Swagger.
 `````shell script
 http://127.0.0.1:8000/api/docs/
 `````
+![recipe swagger](https://github.com/YarinDev/recipe-app-api/assets/74246091/e7a79f94-03da-4799-a144-96a2a90026aa)
+
+
