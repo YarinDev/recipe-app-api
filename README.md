@@ -1,10 +1,41 @@
-<h1> A Recipe API using TDD </h1>
+<h1> RecipeApp API </h1>
 
-<h3> Steps to get the project on your computer: </h3>
 
-## Create a directory where you want to clone the project
+This backend recipe API app was developed with **Django** and **PostgreSQL**, following Test-Driven Development (**TDD**) principles, and utilizes **Swagger** for clear documentation. **GitHub Actions** automates linting and unit tests, while **Docker/Docker Compose** simplifies deployment. Hosted on **AWS**, the app ensures scalability for efficient recipe management.
+
+
+
+
+### **You can access the Recipe API website here** -> [**Link**](https://rebrand.ly/y2p7asp)
+
+
+## Features
+
+- Secure user authentication
+- Easy creation of objects
+- Simple filtering and sorting
+- Effortless image uploading and viewing
+
+
+
+## 🛠 Skills
+Python, Django, PostgreSQL, TDD, GitHub Actions, Swagger, Docker/Docker Compose, AWS (EC2 & RDS).
+
+
+## 🔗 Links
+[![website](https://img.shields.io/badge/website-000000?style=for-the-badge&logo=About.me&logoColor=white)](https://rebrand.ly/y2p7asp)
+
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/yarin-getter/)
+
+
+
+
+## Steps to get the project on your computer:
+
+## <h3> Create a directory where you want to clone the project </h3>
 `````shell script
 mkdir recipe-project
+
 `````
 
 ## Change into the directory
